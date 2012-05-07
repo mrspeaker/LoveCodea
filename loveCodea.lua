@@ -258,10 +258,19 @@ function ellipse( x, y, width, height)
 		-- A bug in Love 0.8.0? getLineWidth() always returns 1
 		--local lw = love.graphics.getLineWidth()
 		local lw = _strokewidth
-		love.graphics.setColor(unpack{_strokecolor})
-		love.graphics.circle("line", x, y, radius - lw / 2, 50)
+        if lw > 0 then
+            love.graphics.setColor(unpack{_strokecolor})
+            love.graphics.circle("line", x, y, radius - lw / 2, 50)
+        end
 	else
-		ellipse2( x, y, width/2, height/2 )
+        if fillMode == "fill" then
+            ellipse3( 'fill', x, y, width/2, height/2)
+        end
+		local lw = _strokewidth
+        if lw > 0 then
+            ellipse2(x, y, width/2, height/2)
+        end
+        love.graphics.setColor(unpack{_strokecolor})
 	end
 end
 
@@ -284,6 +293,40 @@ function ellipse2(x,y,a,b) --,stp,rot)
 	end
 end
 
+-- Ellipse in general parametric form 
+-- (See http://en.wikipedia.org/wiki/Ellipse#General_parametric_form)
+-- (Hat tip to IdahoEv: https://love2d.org/forums/viewtopic.php?f=4&t=2687)
+--
+-- The center of the ellipse is (x,y)
+-- a and b are semi-major and semi-minor axes respectively
+-- phi is the angle in radians between the x-axis and the major axis
+
+function ellipse3(mode, x, y, a, b, phi, points)
+  phi = phi or 0
+  points = points or 10
+  if points <= 0 then points = 1 end
+
+  local two_pi = math.pi*2
+  local angle_shift = two_pi/points
+  local theta = 0
+  local sin_phi = math.sin(phi)
+  local cos_phi = math.cos(phi)
+
+  local coords = {}
+  for i = 1, points do
+    theta = theta + angle_shift
+    coords[2*i-1] = x + a * math.cos(theta) * cos_phi 
+                      - b * math.sin(theta) * sin_phi
+    coords[2*i] = y + a * math.cos(theta) * sin_phi 
+                    + b * math.sin(theta) * cos_phi
+  end
+
+  coords[2*points+1] = coords[1]
+  coords[2*points+2] = coords[2]
+  love.graphics.setColor(unpack{_fillcolor})
+  love.graphics.polygon(mode, coords)
+end
+
 function line(x1,y1,x2,y2)
 --number width
 --The width of the line.
@@ -302,15 +345,17 @@ function rect(x,y,width,height)
 	--local c = {love.graphics.getColor()}
 	if rectangleMode == CENTER then
 		x = x - width / 2
-		y = y - width / 2
+		y = y - height / 2
 	end
 	if fillMode == "fill" then
 		love.graphics.setColor(unpack{_fillcolor})
 		love.graphics.rectangle("fill",x,y,width,height)
 	end
 	local lw = _strokewidth
-	love.graphics.setColor(unpack{_strokecolor})
-	love.graphics.rectangle("line",x+lw/2,y+lw/2,width-lw,height-lw)
+    if lw > 0 then
+	    love.graphics.setColor(unpack{_strokecolor})
+	    love.graphics.rectangle("line",x+lw/2,y+lw/2,width-lw,height-lw)
+    end
 	--love.graphics.setColor(unpack{c})
 end
 
