@@ -856,7 +856,7 @@ function _sprite_draw( image, x, y, width, height )
 		love.graphics.draw(image, -width / 2, -height / 2, 0, sx, sy)
 	else
 		-- CORNER (upper left)
-		love.graphics.draw(image, 0, 0, 0, sx, sy)
+		love.graphics.draw(image, 0, -height, 0, sx, sy)
 	end
 	love.graphics.pop()
 	love.graphics.setColorMode("modulate")
