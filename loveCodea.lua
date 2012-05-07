@@ -472,6 +472,7 @@ function noFill()
 end
 
 function noStroke()
+    _strokeWidth = 0
 end
 
 function rectMode(mode)
@@ -498,7 +499,7 @@ function stroke(red,green,blue,alpha)
 	_strokecolor = {love.graphics.getColor()}
 end
 
-_strokewidth = 1
+_strokewidth = 0
 function strokeWidth(width)
 	love.graphics.setLineWidth( width )
 	_strokewidth = width
