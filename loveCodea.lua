@@ -303,7 +303,7 @@ end
 
 function ellipse3(mode, x, y, a, b, phi, points)
   phi = phi or 0
-  points = points or 10
+  points = points or math.floor((a + b) / 2)
   if points <= 0 then points = 1 end
 
   local two_pi = math.pi*2
