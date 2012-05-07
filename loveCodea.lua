@@ -58,6 +58,7 @@ class = class or function() end
 color = color or function() end
 CORNER = 0
 CORNERS = 1
+CurrentOrientation = "LANDSCAPE"
 CurrentTouch = {} --[[ Touch
 x:0.000000, y:0.000000
 prevX:0.000000, prevY:0.000000
@@ -75,6 +76,7 @@ Gravity = {} --[[ (0.000000, 0.000000, 0.000000)]]--
 HEIGHT = 748
 iparameter = iparameter or function() end
 iwatch = iwatch or function() end
+LANDSCAPE = "LANDSCAPE"
 line = line or function() end
 lineCapMode = lineCapMode or function() end
 MOVING = 2
@@ -88,6 +90,7 @@ point = point or function() end
 pointSize = pointSize or function() end
 popMatrix = popMatrix or function() end
 popStyle = popStyle or function() end
+PORTRAIT = "PORTRAIT"
 print = print or function() end
 PROJECT = 2
 pushMatrix = pushMatrix or function() end
