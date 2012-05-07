@@ -43,9 +43,8 @@ dofile ("loveCodify.lua")
 if MIRROR == nil then
 	MIRROR = true
 end
-if LOVECODIFYHUD == nil then
-	LOVECODIFYHUD = true
-end
+
+LOVECODIFYHUD = LOVECODIFYHUD or false
 
 -- CODEA Dump https://gist.github.com/1375114
 --------------------------------------------------
